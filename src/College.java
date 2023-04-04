@@ -9,7 +9,8 @@ public class College implements Serializable {
     //addStudent, removeStudent,updateStudent, payFees,promoteStudenttoNextGrade
     //in update Student have a way to change branch
     //Two users can have same name so, instead of showing details by using name, use prn
-
+    //makes paid fees as 0 every time year changes, as fees are yearly
+    //Write a logic avoid paying money if fees are already
 
     List<Student> students = new ArrayList<>();
     static long count;
@@ -75,15 +76,16 @@ public class College implements Serializable {
             e.printStackTrace();
             System.out.println("Unable to add user to database but Student is removed from list");
         }
-        //Delete a row
     }
     void payFees(){
         System.out.println("Enter name of Student whose fees is to be paid ");
         String name =  Student.sc.next();
         Iterator it = students.iterator();
+        Student s1; int index = 0;
         while(it.hasNext()){
             Student s = (Student) it.next();
             if(s.sName.equals(name)) {
+                index = students.indexOf(s);
                 double remainingFees = s.totalFees - s.paidFees;
                 System.out.println("Total fees for your Branch : "+s.totalFees);
                 System.out.println("Already paid fees for "+name+" :"+s.paidFees);
@@ -106,14 +108,32 @@ public class College implements Serializable {
                     }break;
                     case 2:{
                         System.out.println("Enter amount you want to pay: ");
-                        s.paidFees = Student.sc.nextDouble();
+                        s.paidFees = s.paidFees+ Student.sc.nextDouble();
                         System.out.println("Amount received");
                     }
                     break;
                 }
             }
         }
-        //update paidfess and total for the particular student in DB
+        s1 = students.get(index);
+        try{
+            Connection con  = ConnectionWithDB.createCon();
+            Statement st = con.createStatement();
+            String query = "update College" +
+                    " set paidFees = "+ s1.paidFees +
+                    " where sName = '"+name +"';";
+
+
+            st.executeUpdate(query);
+            System.out.println(name+"'s total fees paid till date are: "+s1.paidFees);// change this line
+            st.close();
+            con.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Unable to fetch student's fees from database but Student's money are stored in list ");
+        }
+
     }
     void upgradeStudentYear(){
         System.out.println("Enter name of Student whose grade is to be upgrade ");
