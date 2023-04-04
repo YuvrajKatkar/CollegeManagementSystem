@@ -11,8 +11,8 @@ public class College implements Serializable {
     //Two users can have same name so, instead of showing details by using name, use prn
     //makes paid fees as 0 every time year changes, as fees are yearly
     //Write a logic avoid paying money if fees are already
-
-    List<Student> students = new ArrayList<>();
+    //write a logic to make the course of 4 years only
+    public List<Student> students = new ArrayList<>();
     static long count;
     void addStudent(){
 
@@ -48,8 +48,10 @@ public class College implements Serializable {
             Student s = (Student) it.next();
             if(s.sName.equals(name)) {
                 System.out.println(s);
+                return;
             }
         }
+        System.out.println("Student not found");
         //no interaction with DB
     }
     void removeStudent(){
@@ -143,6 +145,7 @@ public class College implements Serializable {
             Student s = (Student) it.next();
             if(s.sName.equals(name)) {
                 s.currentYear++;
+                s.paidFees=0;
                 System.out.println(name+" is promoted to class"+s.currentYear);
             }
         }

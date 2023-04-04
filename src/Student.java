@@ -13,7 +13,9 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "Name: \t\t\t"+sName+"\nNative Place: \t"+nativeCity+"\nBranch: \t\t"+branch+"\nYear: \t\t\t"+currentYear+"\nPRN: \t\t\t"+PRN;
+        return "\nName: \t\t\t"+sName+"\nNative Place: \t"+nativeCity+"\nBranch: \t\t"+branch+
+                "\nYear: \t\t\t"+currentYear+"\nPRN: \t\t\t"+PRN+
+                "\nPaid fees: \t\t"+paidFees +"\nTotal fees: \t"+totalFees;
     }
 
 
