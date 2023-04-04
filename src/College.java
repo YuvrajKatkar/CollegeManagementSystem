@@ -141,6 +141,7 @@ public class College implements Serializable {
         System.out.println("Enter name of Student whose grade is to be upgrade ");
         String name =  Student.sc.next();
         Iterator it = students.iterator();
+        Student s1; int index =0;
         while(it.hasNext()){
             Student s = (Student) it.next();
             if(s.sName.equals(name)) {
@@ -149,8 +150,25 @@ public class College implements Serializable {
                 System.out.println(name+" is promoted to class"+s.currentYear);
             }
         }
+        s1 = students.get(index);
+        try{
+            Connection con  = ConnectionWithDB.createCon();
+            Statement st = con.createStatement();
+            String query = "update College" +
+                    " set paidFees = "+ s1.paidFees +"," +
+                    " currentYear = "+ s1.currentYear+
+                    " where sName = '"+name +"';";
 
-        //update only current year for the particular student in DB
+
+            st.executeUpdate(query);
+            System.out.println(name+"'s total fees paid till date are: "+s1.paidFees);// change this line
+            st.close();
+            con.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Unable to fetch student's fees from database but Student's money are stored in list ");
+        }
     }
     void updateStudentDetails(){
         System.out.println("Enter name of students whose details is to be updated");
