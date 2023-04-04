@@ -5,6 +5,8 @@ public class Main {
     //1. Test cases pending and debugging
     //2. Connecting with DB
     //3. Create a new DB for this project after connecting with DB
+    //4. After successfull running of all programs add explaination in comments
+    //5. Make the console aesthetic
 
     static College c;
     static{

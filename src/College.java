@@ -9,6 +9,8 @@ public class College implements Serializable {
     //addStudent, removeStudent,updateStudent, payFees,promoteStudenttoNextGrade
     //in update Student have a way to change branch
     //Two users can have same name so, instead of showing details by using name, use prn
+
+
     List<Student> students = new ArrayList<>();
     static long count;
     void addStudent(){
@@ -36,7 +38,6 @@ public class College implements Serializable {
             e.printStackTrace();
             System.out.println("Unable to add user to database but Student add in list");
         }
-        //insert row in DB
     }
     void displayStudent(){
         System.out.println("Enter name of Student whose details are needed: ");
@@ -54,11 +55,25 @@ public class College implements Serializable {
         System.out.println("Enter name of Student who is to be remove ");
         String name =  Student.sc.next();
         Iterator it = students.iterator();
+        Student s;
         while(it.hasNext()){
-            Student s = (Student) it.next();
+            s = (Student) it.next();
             if(s.sName.equals(name)) {
                 it.remove();
             }
+        }
+        try{
+            Connection con  = ConnectionWithDB.createCon();
+            Statement st = con.createStatement();
+            String query = "delete from College where sName = '"+name+"';";
+            st.executeUpdate(query);
+            System.out.println(name+"'s details removed from the database");
+            st.close();
+            con.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Unable to add user to database but Student is removed from list");
         }
         //Delete a row
     }
