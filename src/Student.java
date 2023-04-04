@@ -2,9 +2,10 @@ import java.io.Serializable;
 import java.util.Scanner;
 
 public class Student implements Serializable {
+    //Find a way to accept multiple words from user in next line
     String sName;
     byte currentYear=1;
-    String PRN;//PRN logic remaining
+    String PRN;
     double paidFees ;
     double totalFees;
     String nativeCity;

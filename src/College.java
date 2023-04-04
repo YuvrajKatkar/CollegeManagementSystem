@@ -1,4 +1,6 @@
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -6,6 +8,7 @@ import java.util.List;
 public class College implements Serializable {
     //addStudent, removeStudent,updateStudent, payFees,promoteStudenttoNextGrade
     //in update Student have a way to change branch
+    //Two users can have same name so, instead of showing details by using name, use prn
     List<Student> students = new ArrayList<>();
     static long count;
     void addStudent(){
@@ -18,6 +21,21 @@ public class College implements Serializable {
         String PRN = "s"+count++;
         Student s1 = new Student(name,city,PRN);
         students.add(s1);
+        try{
+            Connection con  = ConnectionWithDB.createCon();
+            Statement st = con.createStatement();
+            String query = "insert into College (PRN,sName,currentYear,paidFees,totalFees,nativeCity,branch) values ('"
+                    +PRN+"' ,'"+name+"' ,"+s1.currentYear+" ,"+s1.paidFees+" ,"
+                    +s1.totalFees+" ,'"+s1.nativeCity+"' ,'"+s1.branch+"');";
+            st.executeUpdate(query);
+            System.out.println(name+"'s details added to the database");
+            st.close();
+            con.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Unable to add user to database but Student add in list");
+        }
         //insert row in DB
     }
     void displayStudent(){
@@ -93,6 +111,7 @@ public class College implements Serializable {
                 System.out.println(name+" is promoted to class"+s.currentYear);
             }
         }
+
         //update only current year for the particular student in DB
     }
     void updateStudentDetails(){
