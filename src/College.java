@@ -158,8 +158,6 @@ public class College implements Serializable {
                     " set paidFees = "+ s1.paidFees +"," +
                     " currentYear = "+ s1.currentYear+
                     " where sName = '"+name +"';";
-
-
             st.executeUpdate(query);
             System.out.println(name+"'s total fees paid till date are: "+s1.paidFees);// change this line
             st.close();
