@@ -15,6 +15,7 @@ public class Main {
             ObjectInputStream in = new ObjectInputStream(fIn);
 
             c = (College) in.readObject();
+
             in.close();
             fIn.close();
             System.out.println("welcome to Student Management app");
@@ -29,7 +30,7 @@ public class Main {
         }
         if(c==null) {
             c =  new College();
-            System.out.println("new hotel");
+            System.out.println("new College");
 
         }
     }

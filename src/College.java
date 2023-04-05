@@ -16,7 +16,7 @@ public class College implements Serializable {
     //write a logic to make the course of 4 years only
     //Check logic of file db for current year
     public List<Student> students = new ArrayList<>();
-    static long count;
+     long count;
     void addStudent(){
 
         System.out.println("Enter student name: ");
@@ -44,12 +44,12 @@ public class College implements Serializable {
         }
     }
     void displayStudent(){
-        System.out.println("Enter name of Student whose details are needed: ");
-        String name =  Student.sc.next();
+        System.out.println("Enter PRN of Student whose details are needed: ");
+        String PRN =  Student.sc.next();
         Iterator it = students.iterator();
         while(it.hasNext()){
             Student s = (Student) it.next();
-            if(s.sName.equals(name)) {
+            if(s.PRN.equals(PRN)){
                 System.out.println(s);
                 return;
             }
@@ -58,22 +58,22 @@ public class College implements Serializable {
         //no interaction with DB
     }
     void removeStudent(){
-        System.out.println("Enter name of Student who is to be remove ");
-        String name =  Student.sc.next();
+        System.out.println("Enter PRN of Student who is to be remove ");
+        String PRN =  Student.sc.next();
         Iterator it = students.iterator();
         Student s;
         while(it.hasNext()){
             s = (Student) it.next();
-            if(s.sName.equals(name)) {
+            if(s.PRN.equals(PRN)) {
                 it.remove();
             }
         }
         try{
             Connection con  = ConnectionWithDB.createCon();
             Statement st = con.createStatement();
-            String query = "delete from College where sName = '"+name+"';";
+            String query = "delete from College where PRN = '"+PRN+"';";
             st.executeUpdate(query);
-            System.out.println(name+"'s details removed from the database");
+            System.out.println(PRN+"'s details removed from the database");
             st.close();
             con.close();
         }
@@ -83,17 +83,17 @@ public class College implements Serializable {
         }
     }
     void payFees(){
-        System.out.println("Enter name of Student whose fees is to be paid ");
-        String name =  Student.sc.next();
+        System.out.println("Enter PRN of Student whose fees is to be paid ");
+        String PRN =  Student.sc.next();
         Iterator it = students.iterator();
         Student s1; int index = 0;
         while(it.hasNext()){
             Student s = (Student) it.next();
-            if(s.sName.equals(name)) {
+            if(s.PRN.equals(PRN)) {
                 index = students.indexOf(s);
                 double remainingFees = s.totalFees - s.paidFees;
                 System.out.println("Total fees for your Branch : "+s.totalFees);
-                System.out.println("Already paid fees for "+name+" :"+s.paidFees);
+                System.out.println("Already paid fees for "+PRN+" :"+s.paidFees);
                 System.out.println("Amount to be paid: "+ remainingFees);
                 if(remainingFees==0){
                     System.out.println("Fees are already paid");
@@ -126,11 +126,11 @@ public class College implements Serializable {
             Statement st = con.createStatement();
             String query = "update College" +
                     " set paidFees = "+ s1.paidFees +
-                    " where sName = '"+name +"';";
+                    " where PRN = '"+PRN +"';";
 
 
             st.executeUpdate(query);
-            System.out.println(name+"'s total fees paid till date are: "+s1.paidFees);// change this line
+            System.out.println(PRN+"'s total fees paid till date are: "+s1.paidFees);// change this line
             st.close();
             con.close();
         }
@@ -141,16 +141,16 @@ public class College implements Serializable {
 
     }
     void upgradeStudentYear(){
-        System.out.println("Enter name of Student whose grade is to be upgrade ");
-        String name =  Student.sc.next();
+        System.out.println("Enter PRN of Student whose grade is to be upgrade ");
+        String PRN =  Student.sc.next();
         Iterator it = students.iterator();
         Student s1; int index =0;
         while(it.hasNext()){
             Student s = (Student) it.next();
-            if(s.sName.equals(name)) {
+            if(s.PRN.equals(PRN)) {
                 s.currentYear++;
                 s.paidFees=0;
-                System.out.println(name+" is promoted to class"+s.currentYear);
+                System.out.println(PRN+" is promoted to class"+s.currentYear);
             }
         }
         s1 = students.get(index);
@@ -160,9 +160,9 @@ public class College implements Serializable {
             String query = "update College" +
                     " set paidFees = "+ s1.paidFees +"," +
                     " currentYear = "+ s1.currentYear+
-                    " where sName = '"+name +"';";
+                    " where PRN = '"+PRN +"';";
             st.executeUpdate(query);
-            System.out.println(name+"'s total fees paid till date are: "+s1.paidFees);// change this line
+            System.out.println(PRN+"'s total fees paid till date are: "+s1.paidFees);// change this line
             st.close();
             con.close();
         }
@@ -172,12 +172,12 @@ public class College implements Serializable {
         }
     }
     void updateStudentDetails(){
-        System.out.println("Enter name of students whose details is to be updated");
-        String name =  Student.sc.next();
+        System.out.println("Enter PRN of students whose details is to be updated");
+        String PRN =  Student.sc.next();
         Iterator it = students.iterator();
         while(it.hasNext()){
             Student s = (Student) it.next();
-            if(s.sName.equals(name)) {
+            if(s.PRN.equals(PRN)) {
                 try {
                     System.out.println("Select which attribute to change of student");
                     System.out.println("1.Name 2.Current Year 3.Native Place 4.Branch");
