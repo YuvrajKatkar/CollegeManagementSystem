@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,7 +12,9 @@ public class College implements Serializable {
     //Two users can have same name so, instead of showing details by using name, use prn
     //makes paid fees as 0 every time year changes, as fees are yearly
     //Write a logic avoid paying money if fees are already
+    //Add marks table in database and create logic to check whether a student is passed or failed
     //write a logic to make the course of 4 years only
+    //Check logic of file db for current year
     public List<Student> students = new ArrayList<>();
     static long count;
     void addStudent(){
@@ -31,7 +34,7 @@ public class College implements Serializable {
                     +PRN+"' ,'"+name+"' ,"+s1.currentYear+" ,"+s1.paidFees+" ,"
                     +s1.totalFees+" ,'"+s1.nativeCity+"' ,'"+s1.branch+"');";
             st.executeUpdate(query);
-            System.out.println(name+"'s details added to the database");
+            System.out.println(name+"'s details added to the database with PRN Number as :"+PRN);
             st.close();
             con.close();
         }
@@ -175,33 +178,59 @@ public class College implements Serializable {
         while(it.hasNext()){
             Student s = (Student) it.next();
             if(s.sName.equals(name)) {
-                System.out.println("Select which attribute to change of student");
-                System.out.println("1.Name 2.Current Year 3.Native Place 4.Branch");
-                //Find a logic to update in database in a optimized way/more code reuse ability
-                switch (Student.sc.nextInt()){
-                    case 1:{
-                        System.out.println("Enter new name: ");
-                        s.sName = Student.sc.next();
-                    }break;
-                    case 2:{
-                        System.out.println("Enter new year: ");
-                        s.currentYear = Student.sc.nextByte();
-                    }break;
-                    case 3:{
-                        System.out.println("Enter native place: ");
-                        s.nativeCity = Student.sc.next();
-                    }break;
-                    case 4:{
-                        System.out.println("Enter new Branch: ");
-                        System.out.println("Enter following number to select branch \n1\tMechanical\n2\tCivil\n3\tIT\n4\tComputer Science");
-                        switch (Student.sc.nextInt()){
-                            case 1: s.setBranchAsMech();break;
-                            case 2: s.setBranchAsCivil();break;
-                            case 3: s.setBranchAsIt();break;
-                            case 4: s.setBranchAsCSE();break;
+                try {
+                    System.out.println("Select which attribute to change of student");
+                    System.out.println("1.Name 2.Current Year 3.Native Place 4.Branch");
+                    //Find a logic to update in database in a optimized way/more code reuse ability
+                    switch (Student.sc.nextInt()){
+                        case 1:{
+
+                            System.out.println("Enter new name: ");
+                            s.sName = Student.sc.next();
+
+
+                        }break;
+                        case 2:{
+                            System.out.println("Enter new year: ");
+                            s.currentYear = Student.sc.nextByte();
+
+                        }break;
+                        case 3:{
+                            System.out.println("Enter native place: ");
+                            s.nativeCity = Student.sc.next();
+
+                        }break;
+                        case 4:{
+                            System.out.println("Enter new Branch: ");
+                            System.out.println("Enter following number to select branch \n1\tMechanical\n2\tCivil\n3\tIT\n4\tComputer Science");
+                            switch (Student.sc.nextInt()){
+                                case 1:{
+                                    s.setBranchAsMech();
+//
+                                }break;
+                                case 2:{
+                                    s.setBranchAsCivil();
+//
+                                }break;
+                                case 3:{
+                                    s.setBranchAsIt();
+//
+                                }break;
+                                case 4:{
+                                    s.setBranchAsCSE();
+//
+                                }break;
+
+                            }
                         }
                     }
+//
                 }
+                catch (Exception e){
+                   e.printStackTrace();
+                    System.out.println("Unable to connect to the database");
+                }
+
             }
         }
     }
