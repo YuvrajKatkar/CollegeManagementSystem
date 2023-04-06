@@ -7,13 +7,16 @@ import java.util.Iterator;
 import java.util.List;
 
 public class College implements Serializable {
-    //addStudent, removeStudent,updateStudent, payFees,promoteStudenttoNextGrade
-    //in update Student have a way to change branch
-    //Two users can have same name so, instead of showing details by using name, use prn
-    //makes paid fees as 0 every time year changes, as fees are yearly
-    //Write a logic avoid paying money if fees are already
+    //addStudent, removeStudent,updateStudent, payFees,promoteStudenttoNextGrade - done
+    //in update Student have a way to change branch - branch
+    //each branch should also have different capacity so after filling that capacity students can't be added
+    //makes paid fees as 0 every time year changes, as fees are yearly - done
+    //class will be promoted only if fees for current year are paid3 - done
+    //Write a logic avoid paying money if fees are already - done
+    //Bug - Display if student is not found in each method
     //Add marks table in database and create logic to check whether a student is passed or failed
-    //write a logic to make the course of 4 years only
+    //Generate prn automatically - done
+    //write a logic to make the course of 4 years only - done
     //Check logic of file db for current year
     public List<Student> students = new ArrayList<>();
      long count;
@@ -55,7 +58,6 @@ public class College implements Serializable {
             }
         }
         System.out.println("Student not found");
-        //no interaction with DB
     }
     void removeStudent(){
         System.out.println("Enter PRN of Student who is to be remove ");
@@ -148,9 +150,19 @@ public class College implements Serializable {
         while(it.hasNext()){
             Student s = (Student) it.next();
             if(s.PRN.equals(PRN)) {
-                s.currentYear++;
-                s.paidFees=0;
-                System.out.println(PRN+" is promoted to class"+s.currentYear);
+                if(s.currentYear<4){
+                    if(s.paidFees>=s.totalFees){
+                        s.currentYear++;
+                        s.paidFees=0;
+                        System.out.println(PRN+" is promoted to class"+s.currentYear);
+                    }
+                    else{
+                        System.out.println("First please pay complete fees for "+s.currentYear+"'s year");
+                    }
+                }
+                else{
+                    System.out.println("Engineering completed for "+PRN);
+                }
             }
         }
         s1 = students.get(index);
@@ -162,7 +174,7 @@ public class College implements Serializable {
                     " currentYear = "+ s1.currentYear+
                     " where PRN = '"+PRN +"';";
             st.executeUpdate(query);
-            System.out.println(PRN+"'s total fees paid till date are: "+s1.paidFees);// change this line
+            //System.out.println(PRN+"'s total fees paid till date are: "+s1.paidFees);// change this line
             st.close();
             con.close();
         }
@@ -187,44 +199,76 @@ public class College implements Serializable {
 
                             System.out.println("Enter new name: ");
                             s.sName = Student.sc.next();
-
+                            Connection con = ConnectionWithDB.createCon();
+                            String query = "update College set sName = ? where PRN  = ?;";
+                            PreparedStatement st = con.prepareStatement(query);
+                            st.setString(1,s.sName);
+                            st.setString(2, PRN);
+                            st.executeUpdate();
+                            System.out.println("Name updated successfully");
+                            st.close();con.close();
 
                         }break;
                         case 2:{
                             System.out.println("Enter new year: ");
                             s.currentYear = Student.sc.nextByte();
+                            Connection con = ConnectionWithDB.createCon();
+                            String query = "update College set currentYear = ? where PRN  = ?;";
+                            PreparedStatement st = con.prepareStatement(query);
+                            st.setByte(1,s.currentYear);
+                            st.setString(2, PRN);
+                            st.executeUpdate();
+                            System.out.println("Current Year updated successfully");
+                            st.close();con.close();
 
                         }break;
                         case 3:{
                             System.out.println("Enter native place: ");
                             s.nativeCity = Student.sc.next();
 
+                            Connection con = ConnectionWithDB.createCon();
+                            String query = "update College set nativeCity = ? where PRN  = ?;";
+                            PreparedStatement st = con.prepareStatement(query);
+                            st.setString(1,s.nativeCity);
+                            st.setString(2, PRN);
+                            st.executeUpdate();
+                            System.out.println("Native City updated successfully");
+                            st.close();con.close();
+
                         }break;
                         case 4:{
                             System.out.println("Enter new Branch: ");
                             System.out.println("Enter following number to select branch \n1\tMechanical\n2\tCivil\n3\tIT\n4\tComputer Science");
+                            String b1="";
                             switch (Student.sc.nextInt()){
                                 case 1:{
                                     s.setBranchAsMech();
-//
+                                    b1 = "Mechanical";
                                 }break;
                                 case 2:{
                                     s.setBranchAsCivil();
-//
+                                    b1 = "Civil";
                                 }break;
                                 case 3:{
                                     s.setBranchAsIt();
-//
+                                    b1 = "It";
                                 }break;
                                 case 4:{
                                     s.setBranchAsCSE();
-//
+                                    b1 = "Computer Science Engineering";
                                 }break;
 
                             }
+                            Connection con = ConnectionWithDB.createCon();
+                            String query = "update College set branch = ? where PRN  = ?;";
+                            PreparedStatement st = con.prepareStatement(query);
+                            st.setString(1,b1);
+                            st.setString(2, PRN);
+                            st.executeUpdate();
+                            System.out.println("Branch updated successfully");
+                            st.close();con.close();
                         }
                     }
-//
                 }
                 catch (Exception e){
                    e.printStackTrace();
