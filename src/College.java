@@ -24,7 +24,8 @@ public class College implements Serializable {
     void addStudent(){
 
         System.out.println("Enter student name: ");
-        String name = Student.sc.next();
+        String name = Student.sc.nextLine();
+        name = Student.sc.nextLine();
         System.out.println("Enter native city name: ");
         String city = Student.sc.next();
         String PRN = "s"+count++;
