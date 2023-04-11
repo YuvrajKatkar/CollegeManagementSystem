@@ -64,6 +64,7 @@ public class College implements Serializable {
         System.out.println("Enter PRN of Student who is to be remove ");
         String PRN =  Student.sc.next();
         Iterator it = students.iterator();
+        count--;
         Student s;
         while(it.hasNext()){
             s = (Student) it.next();
@@ -100,9 +101,9 @@ public class College implements Serializable {
                 double remainingFees = s.totalFees - s.paidFees;
                 System.out.println("Total fees for your Branch : "+s.totalFees);
                 System.out.println("Already paid fees for "+PRN+" :"+s.paidFees);
-                System.out.println("Amount to be paid: "+ remainingFees);
+                System.out.println("Amount to be paid: "+ (float)remainingFees);
                 if(remainingFees==0){
-                    System.out.println("Fees are already paid");
+                    System.out.println("Fees are already paid, no need to pay again");
                     return;
                 }
                 System.out.println("Pay amount by \n1.Full Payment 2.Installments");
@@ -124,6 +125,9 @@ public class College implements Serializable {
                         System.out.println("Amount received");
                     }
                     break;
+                    default:{
+                        System.out.println("select appropriate option, try again");return;
+                    }
                 }
                 s1 = students.get(index);
                 try{
@@ -137,6 +141,7 @@ public class College implements Serializable {
 
                     st.executeUpdate(query);
                     System.out.println(PRN+"'s total fees paid till date are: "+s1.paidFees);// change this line
+                    System.out.println("Updated in database");
                     st.close();
                     con.close();
                     return;
@@ -173,9 +178,11 @@ public class College implements Serializable {
                                     " currentYear = "+ s1.currentYear+
                                     " where PRN = '"+PRN +"';";
                             st.executeUpdate(query);
+                            System.out.println("Updated in database");
                             //System.out.println(PRN+"'s total fees paid till date are: "+s1.paidFees);// change this line
                             st.close();
                             con.close();
+                            return;
                         }
                         catch(Exception e){
                             e.printStackTrace();
@@ -183,11 +190,11 @@ public class College implements Serializable {
                         }
                     }
                     else{
-                        System.out.println("First please pay complete fees for "+s.currentYear+"'s year");
+                        System.out.println("First please pay complete fees for "+s.currentYear+"'s year");return;
                     }
                 }
                 else{
-                    System.out.println("Engineering completed for "+PRN);
+                    System.out.println("Engineering completed for "+PRN);return;
                 }
             }
         }
