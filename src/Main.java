@@ -18,7 +18,7 @@ public class Main {
 
             in.close();
             fIn.close();
-            System.out.println("welcome to Student Management app");
+            System.out.println("Welcome to Student Management app");
 
 
 
@@ -47,9 +47,10 @@ public class Main {
 
     }
     public static void main(String[] args) {
-        System.out.println("Hello");
         while(true){
-            System.out.println("1. add Student 2. remove Student 3.display student 4.pay fees 5.Upgrade students grade 6.Update Student details");
+            System.out.println("_____________________________________");
+
+            System.out.println("1. Add Student \n2. Remove Student \n3. Display student \n4. Pay fees \n5. Upgrade students grade \n6. Update Student details");
             System.out.println("Press 100  to exit");
             switch (Student.sc.nextInt()){
                 case 1: c.addStudent();saveChanges();break;
@@ -61,6 +62,7 @@ public class Main {
                 default: {
                     //save code
                     saveChanges();
+                    System.out.println("Application closed");
                     System.exit(0);}
             }
         }

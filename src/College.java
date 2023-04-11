@@ -209,13 +209,14 @@ public class College implements Serializable {
             if(s.PRN.equals(PRN)) {
                 try {
                     System.out.println("Select which attribute to change of student");
-                    System.out.println("1.Name 2.Current Year 3.Native Place 4.Branch");
+                    System.out.println("1. Name \n2. Current Year \n3. Native Place \n4. Branch");
                     //Find a logic to update in database in a optimized way/more code reuse ability
                     switch (Student.sc.nextInt()) {
                         case 1 -> {
 
                             System.out.println("Enter new name: ");
-                            s.sName = Student.sc.next();
+                            s.sName = Student.sc.nextLine();
+                            s.sName = Student.sc.nextLine();
                             Connection con = ConnectionWithDB.createCon();
                             String query = "update College set sName = ? where PRN  = ?;";
                             PreparedStatement st = con.prepareStatement(query);
@@ -261,27 +262,26 @@ public class College implements Serializable {
                             System.out.println("Enter following number to select branch \n1\tMechanical\n2\tCivil\n3\tIT\n4\tComputer Science");
                             String b1 = "";
                             switch (Student.sc.nextInt()) {
-                                case 1: {
+                                case 1 -> {
                                     s.setBranchAsMech();
                                     b1 = "Mechanical";
                                 }
-                                break;
-                                case 2: {
+                                case 2 -> {
                                     s.setBranchAsCivil();
                                     b1 = "Civil";
                                 }
-                                break;
-                                case 3: {
+                                case 3 -> {
                                     s.setBranchAsIt();
                                     b1 = "It";
                                 }
-                                break;
-                                case 4: {
+                                case 4 -> {
                                     s.setBranchAsCSE();
-                                    b1 = "Computer Science Engineering";
+                                    b1 = "Computer Science ";
                                 }
-                                break;
-
+                                default -> {
+                                    System.out.println("Select appropriate option");
+                                    return;
+                                }
                             }
                             Connection con = ConnectionWithDB.createCon();
                             String query = "update College set branch = ? where PRN  = ?;";
@@ -294,11 +294,14 @@ public class College implements Serializable {
                             con.close();
                             return;
                         }
+                        default ->{ System.out.println("Please select appropriate option");return;}
                     }
+
                 }
                 catch (Exception e){
                    e.printStackTrace();
                     System.out.println("Unable to connect to the database");
+                    return;
                 }
 
             }
