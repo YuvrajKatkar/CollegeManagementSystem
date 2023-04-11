@@ -7,7 +7,6 @@ public class CseBranch implements Branch{
 
     @Override
     public double addBranch() {
-        //Add logic to assign that branch to student
         System.out.println("Branch selected as "+bName);
         return fees;
     }
