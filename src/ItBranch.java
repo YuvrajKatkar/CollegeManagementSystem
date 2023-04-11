@@ -1,6 +1,6 @@
 public class ItBranch implements Branch{
     String bName = "Information Technology";
-    double fees = 10123.5;
+    double fees = 102123.5;
     public String toString(){
         return bName;
     }

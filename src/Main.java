@@ -5,7 +5,7 @@ public class Main {
     //1. Test cases pending and debugging
     //2. Connecting with DB
     //3. Create a new DB for this project after connecting with DB
-    //4. After successfull running of all programs add explaination in comments
+    //4. After successful running of all programs add explaination in comments
     //5. Make the console aesthetic
 
     static College c;
@@ -15,9 +15,10 @@ public class Main {
             ObjectInputStream in = new ObjectInputStream(fIn);
 
             c = (College) in.readObject();
+
             in.close();
             fIn.close();
-            System.out.println("welcome to Student Management app");
+            System.out.println("Welcome to Student Management app");
 
 
 
@@ -29,7 +30,7 @@ public class Main {
         }
         if(c==null) {
             c =  new College();
-            System.out.println("new hotel");
+            System.out.println("new College");
 
         }
     }
@@ -46,9 +47,10 @@ public class Main {
 
     }
     public static void main(String[] args) {
-        System.out.println("Hello");
         while(true){
-            System.out.println("1. add Student 2. remove Student 3.display student 4.pay fees 5.Upgrade students grade 6.Update Student details");
+            System.out.println("_____________________________________");
+
+            System.out.println("1. Add Student \n2. Remove Student \n3. Display student \n4. Pay fees \n5. Upgrade students grade \n6. Update Student details");
             System.out.println("Press 100  to exit");
             switch (Student.sc.nextInt()){
                 case 1: c.addStudent();saveChanges();break;
@@ -60,6 +62,7 @@ public class Main {
                 default: {
                     //save code
                     saveChanges();
+                    System.out.println("Application closed");
                     System.exit(0);}
             }
         }
