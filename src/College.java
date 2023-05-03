@@ -17,7 +17,6 @@ public class College implements Serializable {
     //Bug - Display if student is not found in each method -done
     //Add marks table in database and create logic to check whether a student is passed or failed
     //Generate prn automatically - done
-    //write a logic to make the course of 4 years only - done
     //Check logic of file db for current year
     public List<Student> students = new ArrayList<>();
      long count;
