@@ -7,18 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class College implements Serializable {
-    //addStudent, removeStudent,updateStudent, payFees,promoteStudenttoNextGrade - done
-    //in update Student have a way to change branch - branch
-    //Change name to multi-word string
-    //each branch should also have different capacity so after filling that capacity students can't be added
-    //makes paid fees as 0 every time year changes, as fees are yearly - done
-    //class will be promoted only if fees for current year are paid3 - done
-    //Write a logic avoid paying money if fees are already - done
-    //Bug - Display if student is not found in each method -done
-    //Add marks table in database and create logic to check whether a student is passed or failed
-    //Generate prn automatically - done
-    //write a logic to make the course of 4 years only - done
-    //Check logic of file db for current year
+
     public List<Student> students = new ArrayList<>();
      long count;
     void addStudent(){
