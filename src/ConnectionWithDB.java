@@ -6,7 +6,7 @@ public class ConnectionWithDB {
     public static Connection createCon() throws Exception {
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        con =  DriverManager.getConnection("jdbc:mysql://localhost:3306/sakila","root","mysql");
+        con =  DriverManager.getConnection("jdbc:mysql://localhost:3306/collegeManagementSystem","root","mysql");
         return con;
     }
 }
